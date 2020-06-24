@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control Reference</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 700px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        margin-bottom: 15px;
+      }
+      h3 {
+        margin-bottom: 7px;
+        color: #3c3c3c;
+      }
+      table tr td,
+      table tr th {
+        padding: 5px 25px;
+        text-align: right;
+      }
+
+      td {
+        font-family: monospace;
+        font-size: 15px;
+      }
+      table {
+        margin-bottom: 15px;
+      }
+
+      h1,
+      h3 {
+        text-align: center;
+      }
+
+      table tr:nth-child(odd) {
+        background-color: #dcdde1;
+      }
+      p {
+        line-height: 1.5;
+        font-family: monospace;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Controls</h1>
+    <div>
+      <h3>Player One</h3>
+      <div>
+        <table>
+          <tr>
+            <th>Control</th>
+            <th>Button</th>
+          </tr>
+          <tr>
+            <td>left</td>
+            <td>left arrow</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>right arrow</td>
+          </tr>
+          <tr>
+            <td>up</td>
+            <td>up arrow</td>
+          </tr>
+          <tr>
+            <td>down</td>
+            <td>down arrow</td>
+          </tr>
+          <tr>
+            <td>attack</td>
+            <td>spacebar</td>
+          </tr>
+          <tr>
+            <td>pickup</td>
+            <td>down + attack</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h3>Player Two</h3>
+      <div>
+        <table>
+          <tr>
+            <th>Control</th>
+            <th>Button</th>
+          </tr>
+          <tr>
+            <td>left</td>
+            <td>a</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>d</td>
+          </tr>
+          <tr>
+            <td>up</td>
+            <td>w</td>
+          </tr>
+          <tr>
+            <td>down</td>
+            <td>s</td>
+          </tr>
+          <tr>
+            <td>attack</td>
+            <td>z</td>
+          </tr>
+          <tr>
+            <td>pickup</td>
+            <td>down + attack</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div>
+      <p>
+        The controls for player three and four are set to null by default. If
+        you would like to register keys for those players, you are able to in
+        the menu. Simply navigate to the controls menu under the options menu.
+      </p>
+    </div>
+  </body>
+</html>
