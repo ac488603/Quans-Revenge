@@ -13,14 +13,14 @@ var dbrlR = document.getElementById("dbrlR");
 var dbrlL = document.getElementById("dbrlL");
 
 var fps = 60; //frame rate at which the game updates
-var interval = 1/fps; //interval time (see game loop)
+var interval = 1 / fps; //interval time (see game loop)
 var oldTime, newTime, deltaTime = 0; //var for storing frame time difference
 
 //Note: width and height below do not change canvas size
 var width = canvas.width; //width of game level
 var height = canvas.height; //height of game level
 var tileSize = 32; //size of tiles in level
-var tileScale = tileSize/32;
+var tileScale = tileSize / 32;
 
 var scale = 1.0;
 
@@ -32,7 +32,7 @@ var sessionCode = "";
 
 */
 
-var defaultcontrols = {  //player controls are set to this if no controls passed in
+var defaultcontrols = { //player controls are set to this if no controls passed in
     left: null,
     right: null,
     up: null,
@@ -42,24 +42,24 @@ var defaultcontrols = {  //player controls are set to this if no controls passed
 }
 
 var p1controls = {
-    left: 37,   //left arrow
-    right: 39,  //right arrow
-    up: 38,     //up arrow
-    down: 40,   //down arrow
-    jump: 38,   //up arrow
-    attack: 32  //spacebar
+    left: 37, //left arrow
+    right: 39, //right arrow
+    up: 38, //up arrow
+    down: 40, //down arrow
+    jump: 38, //up arrow
+    attack: 32 //spacebar
 }
 
 var p2controls = {
-    left: 65,   //a
-    right: 68,  //d
-    up: 87,     //w
-    down: 83,   //s
-    jump: 87,   //w
+    left: 65, //a
+    right: 68, //d
+    up: 87, //w
+    down: 83, //s
+    jump: 87, //w
     attack: 90
 }
 
-var p3controls = {  //player controls are set to this if no controls passed in
+var p3controls = { //player controls are set to this if no controls passed in
     left: null,
     right: null,
     up: null,
@@ -68,7 +68,7 @@ var p3controls = {  //player controls are set to this if no controls passed in
     attack: null
 }
 
-var p4controls = {  //player controls are set to this if no controls passed in
+var p4controls = { //player controls are set to this if no controls passed in
     left: null,
     right: null,
     up: null,
@@ -85,14 +85,14 @@ function GameLoop() {
     requestAnimationFrame(GameLoop);
     newTime = performance.now(); //time at start of new frame
     //calculates the time in seconds between last frame and new one (should be small, capped at 1 second)
-    deltaTime += (newTime - oldTime)/1000;
+    deltaTime += (newTime - oldTime) / 1000;
     oldTime = newTime;
 
     /*
 	if more time has passed than interval, run updates until less than interval
     keeps updates consistent across varying framerates
     */
-    while(deltaTime >= interval) {
+    while (deltaTime >= interval) {
 
         deltaTime -= interval;
         //scene.Update();
@@ -100,7 +100,7 @@ function GameLoop() {
         startScreen.Update();
         startScreen.Draw();
 
-        if(deltaTime > 5) {
+        if (deltaTime > 5) {
             deltaTime = 0;
         }
     }
@@ -109,13 +109,12 @@ function GameLoop() {
 
 
 var input = new InputHandler();
-if(typeof io != 'undefined') {
-    input.initSocket();   
+if (typeof io != 'undefined') {
+    input.initSocket();
 }
 var startScreen = new startScreen();
 
 var scene = new Scene();
-//scene.Start();
 setSoundtrackVolume(100, spaceList);
 setSoundtrackVolume(100, cityList);
 setSoundtrackVolume(100, battleList);
