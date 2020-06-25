@@ -18,12 +18,10 @@ function generateRoomCode() {
 }
 
 app.use(device.capture());
-
-//
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
   if (req.device.type == "desktop") {
-    app.use(express.static(__dirname + '/public'));
     res.sendFile(__dirname + '/public/index.html');
   } else if (req.device.type == "phone") {
     app.use(express.static(__dirname + '/public/phone'));

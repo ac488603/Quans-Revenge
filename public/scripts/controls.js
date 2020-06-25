@@ -4,7 +4,7 @@ control mapping
   -pass as parameter when creating player
 */
 
-var defaultcontrols = {  //player controls are set to this if no controls passed in
+var defaultcontrols = { //player controls are set to this if no controls passed in
     left: null,
     right: null,
     up: null,
@@ -23,24 +23,24 @@ function mobile(id) {
 }
 
 var p1controls = { //Default Player 1 Controls
-    left: 37,   //left arrow
-    right: 39,  //right arrow
-    up: 38,     //up arrow
-    down: 40,   //down arrow
-    jump: 67,   //up arrow
-    attack: 32  //spacebar
+    left: 37, //left arrow
+    right: 39, //right arrow
+    up: 38, //up arrow
+    down: 40, //down arrow
+    jump: 67, //up arrow
+    attack: 32 //spacebar
 }
 
 var p2controls = { //Default Player 2 Controls
-    left: 65,   //a
-    right: 68,  //d
-    up: 87,     //w
-    down: 83,   //s
-    jump: 87,   //w
+    left: 65, //a
+    right: 68, //d
+    up: 87, //w
+    down: 83, //s
+    jump: 87, //w
     attack: 90
 }
 
-var p3controls = {  //Default Player 3 Controls
+var p3controls = { //Default Player 3 Controls
     left: null,
     right: null,
     up: null,
@@ -49,7 +49,7 @@ var p3controls = {  //Default Player 3 Controls
     attack: null
 }
 
-var p4controls = {  //Default Player 4 Controls
+var p4controls = { //Default Player 4 Controls
     left: null,
     right: null,
     up: null,
@@ -65,11 +65,10 @@ pcontrols.push(p2controls);
 //pcontrols.push(p3controls);
 //pcontrols.push(p4controls);
 
-if(localStorage.p1left == undefined) {
+if (localStorage.p1left == undefined) {
     console.log("creating new local pcontrols")
     storeLocalControls();
-}
-else {
+} else {
     console.log("loading local pcontrols")
     loadLocalControls();
 }
