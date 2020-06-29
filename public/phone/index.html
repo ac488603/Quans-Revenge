@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>Phone Control</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   </head>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="controller.js"></script>
   <link rel="manifest" href="/manifest.json" />
 
   <style type="text/css">
@@ -18,11 +15,10 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       width: 100%;
-      height: 50%;
       max-width: 100%;
-      max-height: 50%;
       position: absolute;
       left: 0px;
       top: 0px;
@@ -31,75 +27,226 @@
       margin: 0;
       padding: 0;
     }
+
     input {
       width: 100%;
+      margin-bottom: 5px;
     }
+
     body {
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
+
     h2 {
       margin-bottom: 10px;
     }
+
     button {
-      padding: 10px 15px;
+      width: 100%;
+      padding: 5px 0;
+    }
+
+    @media (orientation: landscape) {
+
+      #controller {
+        height: 100vh;
+        width: 100vw;
+        background: #dfe4ea;
+        display: flex;
+        flex-direction: row;
+        border-radius: 5px;
+        box-shadow: 1px 2px#ced6e0;
+      }
+
+      #directions {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+      }
+
+      #up,
+      #down {
+        width: 60%;
+        flex: 1;
+        background-color: #2f3542;
+        border-radius: 5px;
+      }
+
+      #left-right {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #left,
+      #right {
+        background-color: #747d8c;
+        width: 85%;
+        height: 85%;
+        border: 1px solid black;
+        border-radius: 5px;
+      }
+
+      #buttons {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 15px;
+      }
+
+      #red {
+        background-color: #ff4757;
+        height: 75%;
+        flex: 1;
+        border-radius: 5px;
+        border: 1px solid black;
+      }
+
+      #blue {
+        background-color: #5352ed;
+        height: 75%;
+        flex: 1;
+        border-radius: 5px;
+        border: 1px solid black;
+      }
+
     }
   </style>
 
   <body>
-    <canvas
-      id="canvas"
-      width="1280px"
-      height="720px"
-      style="position: absolute; left: 0px; top: 0px; z-index: -1;"
-    ></canvas>
     <form id="form1">
       <h2>Enter Session Code:</h2>
-      <input id="text1" type="text" name="code" value="" /><br /><br />
+      <input id="text1" type="text" name="code" value="" autocomplete="off" />
+      <button id="join">Join</button>
     </form>
-    <button id="join">Join</button>
+    <div id="controller">
+      <div id="directions">
+        <div id="up"></div>
+        <div id="left-right">
+          <div id="left"></div>
+          <div id="right"></div>
+        </div>
+        <div id="down"></div>
+      </div>
+      <div id="buttons">
+        <div id="red"></div>
+        <div id="blue"></div>
+      </div>
+    </div>
+  </body>
   </body>
 
   <script>
     var socket = io();
-
     var b = document.getElementById("join");
     var f = document.getElementById("form1");
-
-    //canvas.setAttribute("disabled", "disabled");
-
-    document.addEventListener(
-      "touchmove",
-      function (e) {
-        //e.preventDefault();
-      },
-      false
-    );
-    document.addEventListener(
-      "touchstart",
-      function (e) {
-        //e.preventDefault();
-      },
-      false
-    );
-
     var t1 = document.getElementById("text1");
 
-    b.addEventListener(
-      "click",
-      function () {
-        socket.emit("join", t1.value);
-      },
-      false
-    );
 
-    socket.on("accept", function () {
+    b.addEventListener("click", (e) => {
+      e.preventDefault();
+      socket.emit("join", t1.value);
+    });
+
+    let inp = {
+      0: false,
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false
+    }
+
+    function send() {
+
+      socket.emit('input', inp)
+      requestAnimationFrame(send)
+    }
+
+    let buttons = {
+      'up': () => {
+        inp[0] = true
+      },
+      'right': () => {
+        inp[1] = true
+      },
+      'down': () => {
+        inp[2] = true
+      },
+      'left': () => {
+        inp[3] = true
+      },
+      'red': () => {
+        inp[4] = true
+      },
+      'blue': () => {
+        inp[5] = true
+      }
+    }
+
+    socket.on("accept", () => {
       document.body.removeChild(f);
-      document.body.removeChild(b);
-      start();
+
+      document.querySelector('#controller').addEventListener('touchstart', (e) => {
+        for (let i in inp) {
+          inp[i] = false;
+        }
+
+        for (let touch in Object.keys(e.touches)) {
+          let id = e.touches[touch].target.id
+          if (id !== 'directions' && id != 'buttons') {
+            buttons[id]()
+          }
+        }
+      })
+
+      document.querySelector('#controller').addEventListener('touchend', (e) => {
+        for (let i in inp) {
+          inp[i] = false;
+        }
+
+        for (let touch in Object.keys(e.touches)) {
+          let id = e.touches[touch].target.id
+          if (id !== 'directions' && id != 'buttons') {
+            buttons[id]()
+          }
+        }
+      })
+
+      document.querySelector('#controller').addEventListener('touchmove', (e) => {
+        for (let i in inp) {
+          inp[i] = false;
+        }
+
+        for (let touch in Object.keys(e.touches)) {
+          let id = e.touches[touch].target.id
+          if (id !== 'directions' && id != 'buttons') {
+            buttons[id]()
+          }
+        }
+      })
+
+      document.querySelector('#controller').addEventListener('click', (e) => {
+        for (let i in inp) {
+          inp[i] = false;
+        }
+
+        for (let touch in Object.keys(e.touches)) {
+          let id = e.touches[touch].target.id
+          if (id !== 'directions' && id != 'buttons') {
+            buttons[id]()
+          }
+        }
+      })
+      requestAnimationFrame(send)
     });
   </script>
 
-  <script></script>
 </html>

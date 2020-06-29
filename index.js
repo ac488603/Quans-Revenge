@@ -3,6 +3,9 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var device = require('express-device');
+const {
+  Console
+} = require('console');
 
 var room = [];
 var host = [];
@@ -41,6 +44,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('input', function (inp) {
+    console.log(inp)
     io.to(room[socket.id]).emit('input', socket.id, inp);
   })
 
